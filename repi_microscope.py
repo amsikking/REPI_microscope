@@ -128,7 +128,7 @@ class Microscope:
             which_port='COM6',
             axes=('X', 'Y', 'Z'),
             lead_screws=('S','S','F'),
-            axes_min_mm=(-50,-25,-5), # recommended to check and use!
+            axes_min_mm=(-50,-25,-7), # recommended to check and use!
             axes_max_mm=( 50, 25, 0), # recommended to check and use!
             verbose=False)
         self.XYZ_stage.set_pwm_state('external') # setup 'TL_LED'
