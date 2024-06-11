@@ -39,12 +39,13 @@ emission_filter_options = {'Shutter'                :0,
                            '(unused)'               :7,
                            '(unused)'               :8,
                            '(unused)'               :9}
-objective_options = {'name'  :('Nikon 20x0.75 air',
+objective_options = {'name'  :('Nikon 10x0.45 air',
+                               'Nikon 20x0.75 air',
                                'Nikon 40x0.95 air'),
                      # magnification:
-                     'mag':(20, 40),
+                     'mag':(10, 20, 40),
                      # min working distance spec:
-                     'WD_um' :(1000, 170)}
+                     'WD_um' :(4000, 1000, 170)}
 
 class Microscope:
     def __init__(self,
