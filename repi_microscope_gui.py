@@ -18,7 +18,7 @@ import tkinter_compound_widgets as tkcw # github.com/amsikking/tkinter
 
 class GuiMicroscope:
     def __init__(self, init_microscope=True): # set False for GUI design...
-        self.init_microscope = init_microscope 
+        self.init_microscope = init_microscope
         self.root = tk.Tk()
         self.root.title('REPI Microscope GUI')
         # adjust font size and delay:
@@ -410,11 +410,11 @@ class GuiMicroscope:
             # check current position:
             z_um = self.focus_piezo_z_um.value.get()
             # check which direction:
-            if how == 'large_up':     z_um -= large_move_um
-            if how == 'small_up':     z_um -= small_move_um
+            if how == 'large_up':     z_um += large_move_um
+            if how == 'small_up':     z_um += small_move_um
             if how == 'center':       z_um  = center_um
-            if how == 'small_down':   z_um += small_move_um
-            if how == 'large_down':   z_um += large_move_um
+            if how == 'small_down':   z_um -= small_move_um
+            if how == 'large_down':   z_um -= large_move_um
             # update:
             self.focus_piezo_z_um.update_and_validate(z_um)
             return None
