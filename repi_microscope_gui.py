@@ -272,7 +272,7 @@ class GuiMicroscope:
         inner_frame.grid(row=0, column=0, padx=10, pady=10)
         emission_filter_options = tuple(repi.emission_filter_options.keys())
         self.emission_filter = tk.StringVar()
-        self.emission_filter.set(emission_filter_options[1]) # set default
+        self.emission_filter.set(emission_filter_options[6]) # set default
         option_menu = tk.OptionMenu(
             inner_frame,
             self.emission_filter,
