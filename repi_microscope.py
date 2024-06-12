@@ -27,15 +27,15 @@ except Exception as e:
 
 # Repi optical configuration (edit as needed):
 camera_px_um = 6.5
-dichroic_mirror_options = {'ZT405/488/561/640rpc'   :0,
+dichroic_mirror_options = {'FF409/493/573/652-Di02' :0,
                            '(unused)'               :1}
 emission_filter_options = {'Shutter'                :0,
                            'Open'                   :1,
-                           '(unused)'               :2,
-                           '(unused)'               :3,
-                           '(unused)'               :4,
-                           '(unused)'               :5,
-                           '(unused)'               :6,
+                           'FF01-432/36'            :2,
+                           'FF01-515/30'            :3,
+                           'FF01-595/31'            :4,
+                           'FF01-698/70'            :5,
+                           'FF01-432/515/595/730'   :6,
                            '(unused)'               :7,
                            '(unused)'               :8,
                            '(unused)'               :9}
