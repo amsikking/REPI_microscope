@@ -1,7 +1,7 @@
 # REPI_microscope
 Python control code for the 'ASI RAMM epi' (REPI) microscope
 
-# Key features:
+## Key features:
 A fast and flexible 2D fluorescence microscope. This microscope is physically mobile and relatively easy to modify or re-configure.
 - **Primary objectives**: 10x, 20x and 40x air (more can be added).
 - **XY field of view**: variable between ~200x200um to ~2000x2000um.
