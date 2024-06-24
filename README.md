@@ -1,5 +1,5 @@
 # REPI_microscope
-Python control code for the 'ASI RAMM epi' (REPI) microscope
+Python control code for the 'ASI RAMM epi' (REPI) microscope.
 
 ## Key features:
 A fast and flexible 2D fluorescence microscope. This microscope is physically mobile and relatively easy to modify or re-configure.
