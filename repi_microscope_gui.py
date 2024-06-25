@@ -152,6 +152,8 @@ class GuiMicroscope:
             'write', self._apply_channel_settings)        
         self.power_440.value.trace_add(
             'write', self._apply_channel_settings)
+        for child in self.power_440.winfo_children():
+            child.configure(state='disable')
         # 470/24:
         self.power_470 = tkcw.CheckboxSliderSpinbox(
             frame,
@@ -178,6 +180,8 @@ class GuiMicroscope:
             'write', self._apply_channel_settings)        
         self.power_510.value.trace_add(
             'write', self._apply_channel_settings)
+        for child in self.power_510.winfo_children():
+            child.configure(state='disable')
         # 550/15:
         self.power_550 = tkcw.CheckboxSliderSpinbox(
             frame,
@@ -468,7 +472,7 @@ class GuiMicroscope:
         # objective name:
         objective_options = tuple(repi.objective_options['name'])
         self.objective_name = tk.StringVar()
-        self.objective_name.set(objective_options[0]) # set default
+        self.objective_name.set(objective_options[2]) # set default
         objective_name_option_menu = tk.OptionMenu(
             frame,
             self.objective_name,
