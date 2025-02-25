@@ -701,7 +701,7 @@ if __name__ == '__main__':
         objective_name='Nikon 20x0.75 air',
         channels_per_image=("TL_LED",),
         power_per_channel=(15,),
-        dichroic_mirror='ZT405/488/561/640rpc',
+        dichroic_mirror='FF409/493/573/652-Di02',
         emission_filter='Open',
         illumination_time_us=10000,
         height_px=2048,
