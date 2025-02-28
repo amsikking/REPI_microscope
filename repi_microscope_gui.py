@@ -302,7 +302,7 @@ class GuiMicroscope:
             checkbox_enabled=False,
             slider_enabled=False,
             min_value=100,
-            max_value=1000000,
+            max_value=475000,
             default_value=10000,
             columnspan=2,
             row=0,
@@ -317,7 +317,7 @@ class GuiMicroscope:
             "The 'illumination time (us)' determines how long the sample\n" +
             "will be exposed to light (i.e. the camera will collect the\n" +
             "emmitted light during this time).\n" +
-            "NOTE: the range in the GUI is 100us to 1000000us (1s).")
+            "NOTE: the range in the GUI is 100us to 475000us (0.475s).")
         # height_px:
         self.height_px = tkcw.CheckboxSliderSpinbox(
             frame,
