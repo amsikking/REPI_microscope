@@ -15,7 +15,7 @@ try:
     import asi_MS_2000_500_CP       # github.com/amsikking/asi_MS_2000_500_CP
     import lumencor_Spectra_X       # github.com/amsikking/lumencor_Spectra_X
     import concurrency_tools as ct  # github.com/AndrewGYork/tools
-    import ni_PCI_6733              # github.com/amsikking/ni_PCI_6733
+    import ni_PCIe_6738             # github.com/amsikking/ni_PCIe_6738
     import pco_panda42_bi           # github.com/amsikking/pco_panda42_bi
     import pi_E_709_1C1L            # github.com/amsikking/pi_E_709_1C1L
     import prior_PureFocus850       # github.com/amsikking/prior_PureFocus850
@@ -113,7 +113,7 @@ class Microscope:
     def _init_filter_wheel(self):
         if self.verbose: print("\n%s: opening filter wheel..."%self.name)
         self.filter_wheel = sutter_Lambda_10_3.Controller(
-            which_port='COM3', verbose=False)
+            which_port='COM10', verbose=False)
         if self.verbose: print("\n%s: -> filter wheel open."%self.name)
         atexit.register(self.filter_wheel.close)
 
@@ -126,11 +126,11 @@ class Microscope:
     def _init_XYZ_stage(self):
         if self.verbose: print("\n%s: opening XYZ stage..."%self.name)
         self.XYZ_stage = asi_MS_2000_500_CP.Controller(
-            which_port='COM6',
+            which_port='COM3',
             axes=('X', 'Y', 'Z'),
             lead_screws=('S','S','F'),
-            axes_min_mm=(-50,-25,-7), # recommended to check and use!
-            axes_max_mm=( 50, 25, 0), # recommended to check and use!
+            axes_min_mm=(-60,-40,-7), # recommended to check and use!
+            axes_max_mm=( 60, 40, 0), # recommended to check and use!
             verbose=False)
         self.XYZ_stage.set_pwm_state('external') # setup 'TL_LED'
         if self.verbose: print("\n%s: -> XYZ stage open."%self.name)
@@ -139,7 +139,7 @@ class Microscope:
     def _init_focus_piezo(self):
         if self.verbose: print("\n%s: opening focus piezo..."%self.name)
         self.focus_piezo = pi_E_709_1C1L.Controller(
-            which_port='COM8', z_min_um=0, z_max_um=400, verbose=False)
+            which_port='COM7', z_min_um=0, z_max_um=400, verbose=False)
         if self.verbose: print("\n%s: -> focus piezo open."%self.name)
         atexit.register(self.focus_piezo.close)
 
@@ -148,14 +148,14 @@ class Microscope:
         self.led_names = (
             '395/25', '440/20', '470/24', '510/25', '550/15', '640/30')
         self.led_box = lumencor_Spectra_X.Controller(
-            which_port='COM5', led_names=self.led_names, verbose=False)
+            which_port='COM4', led_names=self.led_names, verbose=False)
         if self.verbose: print("\n%s: -> leds open."%self.name)
         atexit.register(self.led_box.close)
 
     def _init_autofocus(self):
         if self.verbose: print("\n%s: opening autofocus..."%self.name)
         self.autofocus = prior_PureFocus850.Controller(
-            which_port='COM7', verbose=False)
+            which_port='COM9', verbose=False)
         if self.verbose: print("\n%s: -> autofocus open."%self.name)
         atexit.register(self.autofocus.close)
 
@@ -178,7 +178,7 @@ class Microscope:
             '640/30_TTL': 7,
             }
         if self.verbose: print("\n%s: opening ao card..."%self.name)
-        self.ao = ni_PCI_6733.DAQ(
+        self.ao = ni_PCIe_6738.DAQ(
             num_channels=8, rate=ao_rate, verbose=False)
         if self.verbose: print("\n%s: -> ao card open."%self.name)
         atexit.register(self.ao.close)
