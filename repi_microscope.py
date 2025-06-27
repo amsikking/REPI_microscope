@@ -450,6 +450,7 @@ class Microscope:
                 self.camera._arm(self.camera._num_buffers)
             if timestamp_mode is not None:
                 self.camera._set_timestamp_mode(timestamp_mode)
+            check_write_voltages_thread = False
             if (channels_per_image is not None or
                 power_per_channel is not None or
                 height_px is not None or
@@ -470,7 +471,10 @@ class Microscope:
                 self.camera.num_images = ( # update attribute
                     self.images + self.camera_preframes)
                 self.voltages = self._calculate_voltages()
-                self.update_voltages = True
+                write_voltages_thread = ct.ResultThread(
+                    target=self.ao._write_voltages,
+                    args=(self.voltages,)).start()
+                check_write_voltages_thread = True
             # Finalize hardware commands, fastest to slowest:
             if focus_piezo_z_um is not None:
                 self.focus_piezo._finish_moving()
@@ -484,6 +488,8 @@ class Microscope:
             self.XY_stage_position_mm = (1e-3 * self.XYZ_stage.position_um[0],
                                          1e-3 * self.XYZ_stage.position_um[1])
             self.Z_stage_position_mm = 1e-3 * self.XYZ_stage.position_um[2]
+            if check_write_voltages_thread:
+                write_voltages_thread.get_result()
             self._settings_applied = True
             custody.switch_from(self.camera, to=None) # Release camera
         settings_thread = ct.CustodyThread(
@@ -505,11 +511,6 @@ class Microscope:
                     print("%s: (all arguments must be specified at least once)")
                 custody.switch_from(self.camera, to=None)
                 return
-            # must write and play each time with the ni_PCI_6733 card/adaptor:
-            if self.update_voltages: # update if needed
-                write_voltages_thread = ct.ResultThread(
-                    target=self.ao._write_voltages,
-                    args=(self.voltages,)).start()
             if self.autofocus_enabled: # update attributes:
                 self.focus_piezo_z_um = self.focus_piezo.get_position(
                     verbose=False)
@@ -540,9 +541,6 @@ class Microscope:
             w_px = self.width_px
             ti   = self.images + self.camera_preframes
             data_buffer = self._get_data_buffer((ti, h_px, w_px), 'uint16')
-            if self.update_voltages:
-                write_voltages_thread.get_result()
-                self.update_voltages = False
             # camera.record_to_memory() blocks, so we use a thread:
             camera_thread = ct.ResultThread(
                 target=self.camera.record_to_memory,
